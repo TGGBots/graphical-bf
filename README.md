@@ -3,5 +3,5 @@ A Turing-Complete Graphical Brainfuck Implementation in JavaScript, as per the l
 
 It has the following features:
 * single-byte cells (0-255)
-* infinite canvas that expands to the left and right
+* infinite canvas that expands down and right
 * RGB cell modification(all cells are opaque)
