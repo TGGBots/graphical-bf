@@ -24,7 +24,7 @@ const ArrayPad2D = (arr, width, height) => {
 
 let execute = (code) => {
 	// remove non-bf chars
-	code = code.filter(x => 1 + commands.indexOf(x));
+	code = Array.from(code).filter(x => 1 + commands.indexOf(x));
 	let idx = 0;
 	let bkts = getBrackets(code);
 	let x = 0;
@@ -32,8 +32,8 @@ let execute = (code) => {
 	let maxX = 0;
 	let maxY = 0;
 	let axis = 0; // 0 = x, 1  = y
-	let cells = Array(1).fill(Uint8ClampedArray(1)); //starting on Red
-	let canvas = Array(1).fill(Uint8ClampedArray(1)); //starting on Red
+	let cells = Array(1).fill(new Uint8ClampedArray(1)); //starting on Red
+	let canvas = Array(1).fill(new Uint8ClampedArray(1)); //starting on Red
 	let maxCX = 0;
 	let maxCY = 0;
 
@@ -72,9 +72,10 @@ let execute = (code) => {
 				if (x > maxCX || y > maxCY) {
 					maxCX = Math.max(x, maxCX);
 					maxCY = Math.max(y, maxCY);
-					canvas = ArrayPad2D(canvas, maxCX, maxCY);
+					canvas = ArrayPad2D(canvas, 1 + maxCX, 1 + maxCY);
 				}
 				canvas[y][x] = cells[y][x];
+				break;
 			case '!':
 				alert("Enter a character to discard:");
 				break;
@@ -92,21 +93,26 @@ let execute = (code) => {
 		if (x > maxX || y > maxY) {
 			maxX = Math.max(x, maxX);
 			maxY = Math.max(y, maxY);
-			cells = ArrayPad2D(cells, maxX, maxY);
+			cells = ArrayPad2D(cells, 1 + maxX, 1 + maxY);
+		}
+		console.log(cells);
+		idx++;
+	}
+	canvas = canvas.map(row => row.slice(0, (1 + maxCX) - (row.length % 3)));
+	console.log(canvas);
+	let buffer = new Uint8ClampedArray((1 + maxCX) * (1 + maxCY) * 4);
+	let ctr = 0;
+	for (let x = 0; x <= maxCX; x += 3) {
+		for (let y = 0; y <= maxCY; y++) {
+			buffer[ctr] = canvas[y][x];
+			buffer[ctr + 1] = canvas[y][x + 1];
+			buffer[ctr + 2] = canvas[y][x + 2];
+			buffer[ctr + 3] = 255;
+			ctr += 4;
 		}
 	}
-	canvas = canvas.map(row => row.slice(0, -(row.length % 3)));
-	buffer = new Uint8ClampedArray(maxCX * maxCY * 4);
-	for (let x = 0; x < maxCX; x += 3) {
-		for (let y = 0; y < maxCY; y++) {
-			let pos = (y * width + (x / 3)) * 4;
-			buffer[pos] = canvas[y][x];
-			buffer[pos + 1] = canvas[y][x + 1];
-			buffer[pos + 2] = canvas[y][x + 2];
-			buffer[pos + 3] = 255;
-		}
-	}
-	return [buffer, maxCX, maxCY];
+	console.log(canvas, buffer);
+	return [buffer, 1 + maxCX, 1 + maxCY];
 
 };
 
@@ -124,7 +130,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 		canvas.width = width;
 		canvas.height = height;
 		let idata = ctx.createImageData(width, height);
-		idata.data.set(buffer);
+		idata.data.set(buff);
 		ctx.putImageData(idata, 0, 0);
 		var dataURI = canvas.toDataURL();
 		document.getElementById("output").src = dataURI;
