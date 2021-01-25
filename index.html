@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Graphical brainfuck interpreter</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+		integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ=="
+		crossorigin="anonymous" />
+</head>
+
+<body>
+	<div class="row">
+		<div class="container">
+			<div class="twelve columns">
+				<h1>Graphical brainfuck interpreter</h1>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="container">
+			<div class="twelve columns">
+				<h4>Code</h4>
+				<textarea class="u-full-width" id="code" placeholder="Enter Code.."
+					oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
+
+			</div>
+		</div>
+	</div>
+	<!-- Normal input for later -->
+	<!-- <div class="row">
+		<div class="container">
+			<div class="twelve columns">
+				<h4>Input</h4>
+				<textarea id="input" placeholder="Enter Input.."
+					oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
+			</div>
+		</div>
+	</div> -->
+	<div class="row">
+		<div class="container">
+			<div class="twelve columns">
+				<input class="button-primary" id="execute" type="submit" value="run">
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="container">
+			<div class="twelve columns">
+				<h4>Output</h4>
+				<img src="#" alt="" id="output">
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
