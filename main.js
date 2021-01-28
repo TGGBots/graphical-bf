@@ -66,7 +66,7 @@ let execute = (code) => {
 				axis = !axis;
 				break;
 			case ',':
-				cells[y][x] = (alert("Enter a character:")).codePointAt(0);
+				cells[y][x] = (prompt("Enter a character:")).codePointAt(0);
 				break;
 			case '.':
 				if (x > maxCX || y > maxCY) {
@@ -77,7 +77,7 @@ let execute = (code) => {
 				canvas[y][x] = cells[y][x];
 				break;
 			case '!':
-				alert("Enter a character to discard:");
+				prompt("Enter a character to discard:");
 				break;
 			case '[':
 				if (!cells[y][x]) {
