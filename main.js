@@ -7,7 +7,7 @@ const getBrackets = (code) => {
 	let idxs = new Map();
 	for (let i = 0; i < code.length; i++) {
 		if (code[i] == '[') {
-			stack = stack + i;
+			stac.append(i);
 		}
 		else if (code[i] == ']') {
 			idxs.set(stack.pop(), i);
